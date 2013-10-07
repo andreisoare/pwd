@@ -30,8 +30,10 @@
     $('#master').focus();
     $('#pwd').bind('copy', function() {
       clearTimeout(timer);
-      $('#pwd').val('');
-      $('#master').val('').focus();
+      setTimeout(function() {
+        $('#pwd').val('');
+        $('#master').val('').focus();
+      }, 100);
     });
     $('#master').change(function() {
       clearTimeout(timer);
