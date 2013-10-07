@@ -19,21 +19,39 @@
     var domain = $('#domain').val();
     var pwd = create_hash(master, domain);
     $('#pwd').val(pwd).focus().select();
-    setTimeout(function() {
+    timer = setTimeout(function() {
       $('#pwd').val('');
       $('#master').val('').focus();
     }, 20 * 1000);
   }
 
   $(function() {
+    timer = null;
     $('#master').focus();
+    $('#pwd').bind('copy', function() {
+      clearTimeout(timer);
+      $('#pwd').val('');
+      $('#master').val('').focus();
+    });
+    $('#master').change(function() {
+      clearTimeout(timer);
+    });
+    $('#master').keypress(function() {
+      clearTimeout(timer);
+    });
+    $('#domain').change(function() {
+      clearTimeout(timer);
+    });
+    $('#domain').keypress(function() {
+      clearTimeout(timer);
+    });
   });
 </script>
 
 <form action="javascript:generate()">
   <input id="master" type="password"/>
   <input id="domain" type="password"/>
-  <input id="pwd" type="password" readonly="readonly"/>
+  <input id="pwd" type="text" readonly="readonly" style="color: white;"/>
   <input type="submit" value="Generate"/>
 </form>
 
